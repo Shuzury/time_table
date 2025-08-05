@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.Tech ECE 5th Semester Timetable</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .subjects-legend {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .subjects-legend h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .subject-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .subject-abbr {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.1em;
+        }
+        
+        .subject-full {
+            color: #2c3e50;
+            text-align: right;
+            font-size: 0.95em;
+        }
+        
+        .timetable {
+            overflow-x: auto;
+            margin-top: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 0.9em;
+        }
+        
+        .time-slot {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .day {
+            background: #e8f4fd;
+            font-weight: 600;
+            color: #2980b9;
+        }
+        
+        .slot-1 {
+            background: #7cdf7c;
+            color: #11522c;
+            font-weight: 500;
+        }
+        
+        .slot-2 {
+            background: #e7cd78;
+            color: #291f01;
+            font-weight: 500;
+        }
+        
+        .slot-3 {
+            background: #f39b9f;
+            color: #4a1414;
+            font-weight: 500;
+        }
+        
+        .slot-4 {
+            background: #cce5ff;
+            color: #004085;
+            font-weight: 500;
+        }
+        
+        .slot-5 {
+            background: #f8d7da;
+            color: #721c24;
+            font-weight: 500;
+        }
+        
+        .slot-6 {
+            background: #d1ecf1;
+            color: #0c5460;
+            font-weight: 500;
+        }
+        
+        .slot-7 {
+            background: #ffeaa7;
+            color: #6c5ce7;
+            font-weight: 500;
+        }
+        
+        .slot-8 {
+            background: #fab1a0;
+            color: #50271d;
+            font-weight: 500;
+        }
+        
+        .slot-9 {
+            background: #fd79a8;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .slot-10 {
+            background: #a29bfe;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .slot-11 {
+            background: #55a3ff;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .slot-12 {
+            background: #fd79a8;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .slot-13 {
+            background: #ffeaa7;
+            color: #6c5ce7;
+            font-weight: 500;
+        }
+        
+        .slot-14 {
+            background: #81ecec;
+            color: #154f43;
+            font-weight: 500;
+        }
+        
+        .slot-15 {
+            background: #74b9ff;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .slot-16 {
+            background: #8ddedd;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .break {
+            background: #ffe6e6;
+            color: #c0392b;
+            font-weight: 500;
+        }
+        
+        .free-slot {
+            background: #f8f9fa;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .notes-section {
+            margin-top: 30px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .notes-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .note-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .faculty-info {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #000000;
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            th, td {
+                padding: 8px 4px;
+                font-size: 0.8em;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>B.Tech ECE - 5th Semester</h1>
+            <p> Timetable | Odd Semester 2025 | TSSOT,  Assam University, Silchar</p>
+        </div>
+        
+        <div class="content">
+            <div class="subjects-legend">
+                <details>
+                    <summary>📚 Subject Abbreviations</summary>
+                
+                <!-- <h3>📚 Subject Abbreviations</h3> -->
+                <div class="subjects-grid">
+                    <div class="subject-item">
+                        <span class="subject-abbr">MGT</span>
+                        <span class="subject-full">Management-II</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">AUDIT</span>
+                        <span class="subject-full">Constitution/Ethics</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">EMW</span>
+                        <span class="subject-full">Electromagnetic Waves</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">EMW-L</span>
+                        <span class="subject-full">EM Waves Lab</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">CA</span>
+                        <span class="subject-full">Computer Architecture</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">DSP</span>
+                        <span class="subject-full">Digital Signal Processing</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">DSP-L</span>
+                        <span class="subject-full">DSP Lab</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">CS</span>
+                        <span class="subject-full">Control Systems</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">ES</span>
+                        <span class="subject-full">Embedded Systems</span>
+                    </div>
+                    <div class="subject-item">
+                        <span class="subject-abbr">ES-L</span>
+                        <span class="subject-full">Embedded Systems Lab</span>
+                    </div>
+                </div>
+            </div>
+            </details>
+            <div class="timetable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day/Time</th>
+                            <th>10:00-11:00</th>
+                            <th>11:00-12:00</th>
+                            <th>12:00-1:00</th>
+                            <th>1:00-1:30</th>
+                            <th>1:30-2:30</th>
+                            <th>2:30-3:30</th>
+                            <th>3:30-4:30</th>
+                            <th>4:30-5:30</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="day">MONDAY</td>
+                            <td class="slot-1">MGT</td>
+                            <td class="slot-2">AUDIT</td>
+                            <td class="free-slot">-</td>
+                            <td class="break">LUNCH</td>
+                            <td class="slot-3" colspan="2">CS </td>
+                            <td class="slot-4" colspan="2">EMW </td>
+                        </tr>
+                        <tr>
+                            <td class="day">TUESDAY</td>
+                            <td class="slot-1">MGT</td>
+                            <td class="slot-5" colspan="2">EMW-L (Grp-1) </td>
+                            <td class="break">LUNCH</td>
+                            <td class="slot-6" colspan="2">CA </td>
+                            <td class="slot-7">ES</td>
+                            <td class="free-slot">-</td>
+                        </tr>
+                        <tr>
+                            <td class="day">WEDNESDAY</td>
+                            <td class="slot-2">AUDIT</td>
+                            <td class="slot-8" colspan="2">DSP-L (Grp-2) </td>
+                            <td class="break">LUNCH</td>
+                            <td class="slot-9" colspan="2">DSP </td>
+                            <td class="slot-7">ES</td>
+                            <td class="free-slot">-</td>
+                        </tr>
+                        <tr>
+                            <td class="day">THURSDAY</td>
+                            <td class="slot-1">MGT</td>
+                            <td class="slot-10" colspan="2">DSP-L (Grp-1) / ES-L (Grp-2) </td>
+                            <td class="break">LUNCH</td>
+                            <td class="slot-11">CS</td>
+                            <td class="slot-12" colspan="2">DSP </td>
+                            <td class="slot-13">ES</td>
+                        </tr>
+                        <tr>
+                            <td class="day">FRIDAY</td>
+                            <td class="free-slot">-</td>
+                            <td class="slot-14" colspan="2">EMW-L (Grp-2) / ES-L (Grp-1) </td>
+                            <td class="break">LUNCH</td>
+                            <td class="slot-15">CA</td>
+                            <td class="slot-16" colspan="2">EMW </td>
+                            <td class="free-slot">-</td>
+                        </tr>
+                        <tr>
+                            <td class="day">SATURDAY</td>
+                            <td class="lab-class" colspan="8">Remedial Classes </td>
+                            <!-- <td class="break">LUNCH</td> -->
+                            <!-- <td class="lab-class" colspan="4">Remedial Classes</td> -->
+                            <!-- <td class="lab-class">Remedial Classes</td>
+                            <td class="lab-class">Remedial Classes</td>
+                            <td class="lab-class">Remedial Classes</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="faculty-info">
+                <details>
+                    <summary>Faculty Details</summary>
+                
+                SSN - Prof. Sidhartha Shankar Nath (EMW) <br> MJL - Dr. Mariam Jabali Laskar (CA, CS) <br> 
+                RK - Dr. Richik Kashyap (EMW-L) <br> RR - Dr. Rinku Rabidas (DSP, DSP-L) <br> 
+                BK - Mr. Banoth Krishna (ES, ES-L) <br> ASH - Management & Audit courses
+            </details>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
