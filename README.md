@@ -19,7 +19,8 @@ This repository contains a **simple HTML-based weekly timetable** for my college
 
 <img width="1500" height="438" alt="image" src="https://github.com/user-attachments/assets/1caea87b-716b-45d4-984f-f8dc7c318521" />
 
-
+# 📎LINK
+https://shuzury.github.io/time_table/
 
 
 ## 📂 File Structure
